@@ -22,6 +22,8 @@ let initWebRoutes = (app) => {
   route.put("/api/edit-user", useController.handleEditUser);
   route.delete("/api/delete-user", useController.handleDeleteUser);
 
+  route.get("/allcode", useController.getAllCode);
+
   return app.use("/", route);
 };
 export default initWebRoutes;

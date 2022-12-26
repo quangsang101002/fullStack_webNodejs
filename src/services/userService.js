@@ -110,8 +110,8 @@ let createNewUser = (app) => {
         await db.User.create({
           email: app.email,
           password: hashPassWordFromBcrypt,
-          firstName: app.firstname,
-          lastName: app.lastname,
+          firstName: app.firstName,
+          lastName: app.lastName,
           address: app.address,
           phonenumber: app.phonenumber,
           gender: app.gender === "1" ? true : false,
@@ -177,6 +177,28 @@ let updateUserData = (data) => {
     }
   });
 };
+let getAllCodeService = (typeInput) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!typeInput) {
+        resolve({
+          errCode: 1,
+          errMessage: "missing input parameter",
+        });
+      } else {
+        let res = {};
+        let allcode = await db.Allcode.findAll({
+          where: { type: typeInput },
+        });
+        res.errCode = 0;
+        res.data = allcode;
+        resolve(res);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   handleUserLogin,
   checkUserEmail,
@@ -184,4 +206,5 @@ module.exports = {
   createNewUser,
   deleteUser,
   updateUserData,
+  getAllCodeService,
 };
